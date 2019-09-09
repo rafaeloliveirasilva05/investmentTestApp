@@ -4,10 +4,12 @@ import {
   Text
 } from 'react-native'
 
+import UserRegistration from './screens/UserRegistration'
+
 const App = () => {
   return (
-    <View>
-      <Text>Teste</Text>
+    <View style={{ flex: 1}}>
+      <UserRegistration/>
     </View>
   )
 }
