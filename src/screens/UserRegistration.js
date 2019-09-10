@@ -42,10 +42,17 @@ class UserRegistration extends Component {
   }
 
   handleSubmit = () => {
-    console.tron.log('seletor', this.validateFilds())
     if (this.validateFilds()) {
-      console.tron.log('entreee')
-      this.setState({ stateModalOpen: true })
+
+      let cells = this.state.cells.map(element => {
+        return {
+          ...element,
+          dataInput: '',
+          error: null
+        }
+      })
+
+      this.setState({ stateModalOpen: true, cells })
     }
   }
 
@@ -217,12 +224,12 @@ class UserRegistration extends Component {
     if (!this.state.cells) return null
 
     return (
-
       <>
         {this.state.stateModalOpen &&
           <SimpleModal
             title={'Obrigado'}
-            description={'Mensagem enviada com sucesso :)'} />
+            description={'Mensagem enviada com sucesso :)'}
+            closeStateModalOpen={() => this.setState({ stateModalOpen: false })} />
         }
 
         <ScrollView
