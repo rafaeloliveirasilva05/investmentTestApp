@@ -232,12 +232,14 @@ class UserRegistration extends Component {
             closeStateModalOpen={() => this.setState({ stateModalOpen: false })} />
         }
 
-        <ScrollView
-          style={{ marginTop: 30, marginHorizontal: 25 }}
-          keyboardShouldPersistTaps='always'>
+        {!this.state.stateModalOpen &&
+          <ScrollView
+            style={{ marginTop: 30, marginHorizontal: 25 }}
+            keyboardShouldPersistTaps='always'>
 
-          {this.state.cells.map((element, position) => this.defineFormElements(element, position))}
-        </ScrollView>
+            {this.state.cells.map((element, position) => this.defineFormElements(element, position))}
+          </ScrollView>
+        }
       </>
     )
   }
