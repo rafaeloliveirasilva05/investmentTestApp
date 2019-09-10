@@ -10,12 +10,14 @@ import {
 import axios from 'axios'
 
 import FloatingLabelInput from '../components/FloatingLabelInput'
+import SimpleModal from '../components/SimpleModal'
 
 class UserRegistration extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      cells: null
+      cells: null,
+      stateModalOpen: false
     }
   }
 
@@ -41,28 +43,32 @@ class UserRegistration extends Component {
 
   handleSubmit = () => {
     console.tron.log('seletor', this.validateFilds())
+    if (this.validateFilds()) {
+      console.tron.log('entreee')
+      this.setState({ stateModalOpen: true })
+    }
   }
 
   validateFilds = () => {
     let cellWithValidatedInput = this.state.cells
-    let isError = false
+    let isValidFields = true
 
     this.state.cells.forEach((element, position) => {
       if (element.type === 1) {
 
         if (element.typefield === 1 && element.dataInput === '') {
           cellWithValidatedInput[position].error = true
-          isError = true
+          isValidFields = false
         }
 
         else if (element.typefield === 2 || element.typefield === 'telnumber' && !this.phoneValidation(element.dataInput)) {
           cellWithValidatedInput[position].error = true
-          isError = true
+          isValidFields = false
         }
 
         else if (element.typefield === 3 && !this.emailValidation(element.dataInput)) {
           cellWithValidatedInput[position].error = true
-          isError = true
+          isValidFields = false
         }
 
         else if (element.dataInput !== '' && element.error) {
@@ -71,12 +77,12 @@ class UserRegistration extends Component {
       }
     })
 
-    if (isError) {
+    if (!isValidFields) {
       Alert.alert('Aviso', 'Preencha os intens destacados pra prosseguir')
     }
 
     this.setState({ cells: cellWithValidatedInput })
-    return isError
+    return isValidFields
   }
 
   emailValidation = (email) => {
@@ -211,12 +217,21 @@ class UserRegistration extends Component {
     if (!this.state.cells) return null
 
     return (
-      <ScrollView
-        style={{ marginTop: 30, marginHorizontal: 25 }}
-        keyboardShouldPersistTaps='always'>
 
-        {this.state.cells.map((element, position) => this.defineFormElements(element, position))}
-      </ScrollView>
+      <>
+        {this.state.stateModalOpen &&
+          <SimpleModal
+            title={'Obrigado'}
+            description={'Mensagem enviada com sucesso :)'} />
+        }
+
+        <ScrollView
+          style={{ marginTop: 30, marginHorizontal: 25 }}
+          keyboardShouldPersistTaps='always'>
+
+          {this.state.cells.map((element, position) => this.defineFormElements(element, position))}
+        </ScrollView>
+      </>
     )
   }
 }
