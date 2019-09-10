@@ -4,8 +4,10 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
+  Alert
 } from 'react-native'
+import axios from 'axios'
 
 import FloatingLabelInput from '../components/FloatingLabelInput'
 
@@ -13,63 +15,207 @@ class UserRegistration extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      name: '',
-      email: '',
-      phone: '',
-      isRegisterEmail: true
+      cells: null
     }
   }
 
-  handleSubmit = () => { console.tron.log('seletor', this.state) }
+  async componentDidMount() {
+    try {
+      const url = 'https://floating-mountain-50292.herokuapp.com/cells.json'
+      const fieldInformation = await axios.get(url)
 
-  validationEmail = () => {
+      const cells = fieldInformation.data.cells.map(data => {
+        return {
+          ...data,
+          dataInput: '',
+          error: null
+        }
+      })
+
+      this.setState({ cells })
+
+    } catch (error) {
+      console.tron.log('error', error)
+    }
+  }
+
+  handleSubmit = () => {
+    console.tron.log('seletor', this.validateFilds())
+  }
+
+  validateFilds = () => {
+    let cellWithValidatedInput = this.state.cells
+    let isError = false
+
+    this.state.cells.forEach((element, position) => {
+      if (element.type === 1) {
+
+        if (element.typefield === 1 && element.dataInput === '') {
+          cellWithValidatedInput[position].error = true
+          isError = true
+        }
+
+        else if (element.typefield === 2 || element.typefield === 'telnumber' && !this.phoneValidation(element.dataInput)) {
+          cellWithValidatedInput[position].error = true
+          isError = true
+        }
+
+        else if (element.typefield === 3 && !this.emailValidation(element.dataInput)) {
+          cellWithValidatedInput[position].error = true
+          isError = true
+        }
+
+        else if (element.dataInput !== '' && element.error) {
+          cellWithValidatedInput[position].error = false
+        }
+      }
+    })
+
+    if (isError) {
+      Alert.alert('Aviso', 'Preencha os intens destacados pra prosseguir')
+    }
+
+    this.setState({ cells: cellWithValidatedInput })
+    return isError
+  }
+
+  emailValidation = (email) => {
     const emailPattern = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/
-    return emailPattern.test(this.state.email)
+    return emailPattern.test(email)
+  }
+
+  phoneValidation = (phone) => {
+    const phonelPattern = /\(\d{2}\)\s\d{4,5}\-\d{4}/g
+    return phonelPattern.test(phone)
+  }
+
+  insertMaskIntoPhone = (phone) => {
+    if (phone.length >= 16)
+      return phone.substring(0, 15)
+
+    phone = phone.replace(/[\(\)\' '\-]/g, '')
+    phone = phone.split('')
+
+    if (phone.length > 6 && phone.length <= 10) {
+      phone.splice(6, 0, '-')
+    }
+    else if (phone.length >= 11) {
+      phone.splice(7, 0, '-')
+    }
+
+    phone.splice(0, 0, '(')
+    phone.splice(3, 0, ') ')
+
+    return phone.join('')
+  }
+
+  insertData = (inputData, position) => {
+    let cellWithInputData = this.state.cells
+
+    inputData = cellWithInputData[position].typefield === 'telnumber' ? this.insertMaskIntoPhone(inputData) : inputData
+
+    cellWithInputData[position].dataInput = inputData
+    cellWithInputData[position].error = false
+
+    this.setState({ cells: cellWithInputData })
+  }
+
+  clearInput = (position) => {
+    let cells = this.state.cells
+
+    cells[position].dataInput = ''
+
+    this.setState({ cells })
+  }
+
+  marckCheckBox = (position) => {
+    let cells = this.state.cells
+
+    if (cells[position].dataInput === '' || cells[position].dataInput === false) {
+      cells[position].dataInput = true
+    } else {
+      cells[position].dataInput = false
+    }
+
+    this.setState({ cells })
+  }
+
+  setColorBorder = (formElementData) => {
+    let borderColor = formElementData.error ? 'red' : '#555'
+
+    if (formElementData.typefield === 3) {
+      borderColor = formElementData.dataInput === '' ? '#555' : (this.emailValidation(formElementData.dataInput) ? 'green' : 'red')
+      borderColor = formElementData.error ? 'red' : borderColor
+    }
+
+    return borderColor
+  }
+
+  chooseKeyboardType = (typefield) => {
+    let keyboardType = 'default'
+
+    if (typefield === 'telnumber' || typefield === 2) {
+      keyboardType = 'phone-pad'
+    }
+
+    if (typefield === 3) {
+      keyboardType = 'email-address'
+    }
+
+    return keyboardType
+  }
+
+  defineFormElements = (formElementData, position) => {
+    if (formElementData.type === 1) {
+      return (
+        <FloatingLabelInput
+          label={formElementData.message}
+          value={formElementData.dataInput}
+          onChangeText={(inputData) => this.insertData(inputData, position)}
+          clearInput={() => this.clearInput(position)}
+          borderColor={this.setColorBorder(formElementData)}
+          keyboardType={this.chooseKeyboardType(formElementData.typefield)} />
+      )
+    }
+
+    if (formElementData.type === 2) {
+      return (<Text>{formElementData.message}</Text>)
+    }
+
+    if (formElementData.type === 4) {
+      let isCheckboxChecked = (formElementData.dataInput === '' || formElementData.dataInput === false)
+
+      return (
+        <View style={{ flexDirection: "row", marginTop: 40 }}>
+          <TouchableOpacity
+            style={[styles.registerEmailButtonStyle, { backgroundColor: isCheckboxChecked ? '#fff' : 'red' }]}
+            onPress={() => this.marckCheckBox(position)}>
+          </TouchableOpacity>
+          <Text>{formElementData.message}</Text>
+        </View>
+      )
+    }
+
+    if (formElementData.type === 5) {
+      return (
+        <TouchableOpacity
+          style={styles.submitButtonStyle}
+          onPress={this.handleSubmit}>
+          <Text style={{ color: '#fff', fontSize: 16, }}>{formElementData.message}</Text>
+        </TouchableOpacity>
+      )
+    }
   }
 
   render() {
+    if (!this.state.cells) return null
+
     return (
       <ScrollView
         style={{ marginTop: 30, marginHorizontal: 25 }}
         keyboardShouldPersistTaps='always'>
 
-        <Text style={{ textAlign: 'center', fontSize: 18, fontWeight: 'bold' }}>Contato</Text>
-
-        <FloatingLabelInput
-          label='Nome'
-          value={this.state.name}
-          onChangeText={(text) => this.setState({ name: text })}
-          clearInput={() => this.setState({ name: '' })} />
-
-        {this.state.isRegisterEmail &&
-          <FloatingLabelInput
-            label='Email'
-            value={this.state.email}
-            onChangeText={(text) => this.setState({ email: text })}
-            clearInput={() => this.setState({ email: '' })}
-            borderColor={this.state.email === '' ? '#555' : (this.validationEmail() ? 'green' : 'red')}
-          />
-        }
-
-        <FloatingLabelInput
-          label='Telefone'
-          value={this.state.phone}
-          onChangeText={(text) => this.setState({ phone: text })}
-          clearInput={() => this.setState({ phone: '' })} />
-
-        <View style={{ flexDirection: "row", marginTop: 40 }}>
-          <TouchableOpacity
-            style={[styles.registerEmailButtonStyle, { backgroundColor: this.state.isRegisterEmail ? 'red' : '#fff' }]}
-            onPress={() => this.setState({ isRegisterEmail: !this.state.isRegisterEmail })}>
-          </TouchableOpacity>
-          <Text>Gostaria de cadastrar meu email</Text>
-        </View>
-
-        <TouchableOpacity
-          style={styles.submitButtonStyle}
-          onPress={this.handleSubmit}>
-          <Text style={{ color: '#fff', fontSize: 16, }}>Eviar</Text>
-        </TouchableOpacity>
+        {this.state.cells.map((element, position) => this.defineFormElements(element, position))}
       </ScrollView>
     )
   }
