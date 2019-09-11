@@ -9,9 +9,6 @@ import axios from 'axios'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import IconEntypo from 'react-native-vector-icons/Entypo'
 
-
-
-
 class TrustFund extends Component {
   constructor(props) {
     super(props)
@@ -87,30 +84,41 @@ class TrustFund extends Component {
 
   investmentTable = (investmentInformation) => {
     return (
-      <View style={{ height: 100, flexDirection: 'row', marginTop: 30, }}>
-
+      <View style={{ height: 100, flexDirection: 'row', marginTop: 30, marginBottom: 40 }}>
         <View style={{ flex: 2, justifyContent: 'space-between' }}>
           <Text />
-          <Text style={styles.teste}>No mês</Text>
-          <Text style={styles.teste}>No ano</Text>
-          <Text style={styles.teste}>12 meses</Text>
+          <Text style={styles.labelStyle}>No mês</Text>
+          <Text style={styles.labelStyle}>No ano</Text>
+          <Text style={styles.labelStyle}>12 meses</Text>
         </View>
 
         <View style={{ flex: 1, justifyContent: 'space-between', alignItems: 'flex-end' }}>
-          <Text style={styles.teste}>Fundo</Text>
-          <Text style={styles.teste2}>{`${investmentInformation.month.fund}%`}</Text>
-          <Text style={styles.teste2}>{`${investmentInformation.year.fund}%`}</Text>
-          <Text style={styles.teste2}>100</Text>
+          <Text style={styles.labelStyle}>Fundo</Text>
+          <Text style={styles.investmentTextStyle}>{`${investmentInformation.month.fund}%`}</Text>
+          <Text style={styles.investmentTextStyle}>{`${investmentInformation.year.fund}%`}</Text>
+          <Text style={styles.investmentTextStyle}>100</Text>
         </View>
 
         <View style={{ flex: 1, justifyContent: 'space-between', alignItems: 'flex-end' }}>
-          <Text style={styles.teste}>CDI</Text>
-          <Text style={styles.teste2}>{`${investmentInformation.month.CDI}%`}</Text>
-          <Text style={styles.teste2}>{`${investmentInformation.year.CDI}%`}</Text>
-          <Text style={styles.teste2}>100</Text>
+          <Text style={styles.labelStyle}>CDI</Text>
+          <Text style={styles.investmentTextStyle}>{`${investmentInformation.month.CDI}%`}</Text>
+          <Text style={styles.investmentTextStyle}>{`${investmentInformation.year.CDI}%`}</Text>
+          <Text style={styles.investmentTextStyle}>100</Text>
         </View>
-
       </View>
+    )
+  }
+  
+  moreInformationInvestment = (investmentInformation) => {
+    return (
+      investmentInformation.map(element => {
+        return (
+          <View style={styles.containerMoreInformationInvestment}>
+            <Text style={styles.labelStyle}>{element.name}</Text>
+            <Text style={styles.investmentTextStyle}>{element.data}</Text>
+          </View>
+        )
+      })
     )
   }
 
@@ -139,6 +147,7 @@ class TrustFund extends Component {
         <Text style={{ textAlign: 'center', fontSize: 16, color: '#696969', marginTop: 45, fontWeight: 'bold', }}>{investmentData.infoTitle}</Text>
         {this.investmentTable(investmentData.moreInfo)}
 
+        {this.moreInformationInvestment(investmentData.info)}
 
         <View style={{ marginBottom: 50 }} />
       </ScrollView>
@@ -163,15 +172,21 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#fff'
   },
-  teste: {
+  labelStyle: {
     fontSize: 14,
     color: '#A9A9A9',
     fontWeight: 'bold'
   },
-  teste2: {
+  investmentTextStyle: {
     fontSize: 14,
     color: '#696969',
     fontWeight: 'bold'
+  },
+  containerMoreInformationInvestment: {
+    marginVertical: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   }
 })
 
