@@ -119,7 +119,9 @@ class TrustFund extends Component {
     return (
       investmentInformation.map(element => {
         return (
-          <View style={styles.containerInformation}>
+          <View
+            style={styles.containerInformation}
+            key={element.name}>
             <Text style={styles.labelStyle}>{element.name}</Text>
             <Text style={styles.investmentTextStyle}>{element.data}</Text>
           </View>
@@ -132,7 +134,9 @@ class TrustFund extends Component {
     return (
       downInfo.map(element => {
         return (
-          <View style={styles.containerInformation}>
+          <View
+            key={element.name}
+            style={styles.containerInformation}>
             <Text style={styles.labelStyle}>{element.name}</Text>
             <TouchableOpacity
               onPress={() => Alert.alert('Desculpe', 'Documento não encontrado')}

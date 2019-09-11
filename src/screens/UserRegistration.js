@@ -189,6 +189,7 @@ class UserRegistration extends Component {
     if (formElementData.type === 1) {
       return (
         <FloatingLabelInput
+          key={formElementData.message}
           label={formElementData.message}
           value={formElementData.dataInput}
           autoCapitalize={'none'}
@@ -253,7 +254,11 @@ class UserRegistration extends Component {
             style={{ marginTop: 30, marginHorizontal: 25 }}
             keyboardShouldPersistTaps='always'>
 
-            {this.state.cells.map((element, position) => this.defineFormElements(element, position))}
+            {this.state.cells.map((element, position) =>
+              <View key={element.message}>
+                {this.defineFormElements(element, position)}
+              </View>
+            )}
           </ScrollView>
         }
         <FooterButtons
