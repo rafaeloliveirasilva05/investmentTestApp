@@ -128,7 +128,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.testealtran"
+        applicationId "com.investmenttestapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
