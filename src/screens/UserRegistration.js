@@ -12,6 +12,7 @@ import axios from 'axios'
 import FloatingLabelInput from '../components/FloatingLabelInput'
 import SimpleModal from '../components/SimpleModal'
 import Button from '../components/Button'
+import App from './App'
 
 class UserRegistration extends Component {
   constructor(props) {
@@ -265,4 +266,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default UserRegistration
+export default App(UserRegistration)

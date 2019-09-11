@@ -13,6 +13,7 @@ import IconEntypo from 'react-native-vector-icons/Entypo'
 
 import Button from '../components/Button'
 import SimpleModal from '../components/SimpleModal'
+import App from './App'
 
 class TrustFund extends Component {
   constructor(props) {
@@ -275,4 +276,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default TrustFund
+export default App(TrustFund)
