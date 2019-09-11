@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Text
 } from 'react-native'
+import Colors from '../styles/color'
 
 function SimpleModal({ description, title, closeStateModalOpen ,labelButton}) {
 
@@ -17,7 +18,7 @@ function SimpleModal({ description, title, closeStateModalOpen ,labelButton}) {
       </View>
 
       <View style={{ marginTop: 200 }}>
-        <Text style={{ fontSize: 18, color: 'red', fontWeight: 'bold' }}
+        <Text style={{ fontSize: 18, color: Colors.Primary, fontWeight: 'bold' }}
           onPress={closeStateModalOpen}>
           {labelButton}
           </Text>

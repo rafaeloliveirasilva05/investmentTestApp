@@ -13,6 +13,7 @@ import FloatingLabelInput from '../components/FloatingLabelInput'
 import SimpleModal from '../components/SimpleModal'
 import Button from '../components/Button'
 import FooterButtons from '../components/FooterButtons'
+import Colors from '../styles/color'
 
 class UserRegistration extends Component {
   constructor(props) {
@@ -160,11 +161,11 @@ class UserRegistration extends Component {
   }
 
   setColorBorder = (formElementData) => {
-    let borderColor = formElementData.error ? 'red' : '#555'
+    let borderColor = formElementData.error ? Colors.Primary : '#555'
 
     if (formElementData.typefield === 3) {
-      borderColor = formElementData.dataInput === '' ? '#555' : (this.emailValidation(formElementData.dataInput) ? 'green' : 'red')
-      borderColor = formElementData.error ? 'red' : borderColor
+      borderColor = formElementData.dataInput === '' ? '#555' : (this.emailValidation(formElementData.dataInput) ? 'green' : Colors.Primary)
+      borderColor = formElementData.error ? Colors.Primary : borderColor
     }
 
     return borderColor
@@ -207,7 +208,7 @@ class UserRegistration extends Component {
       return (
         <View style={{ flexDirection: "row", marginTop: 40 }}>
           <TouchableOpacity
-            style={[styles.registerEmailButtonStyle, { backgroundColor: isCheckboxChecked ? '#fff' : 'red' }]}
+            style={[styles.registerEmailButtonStyle, { backgroundColor: isCheckboxChecked ? '#fff' : Colors.Primary }]}
             onPress={() => this.marckCheckBox(position)}>
           </TouchableOpacity>
           <Text>{formElementData.message}</Text>
@@ -273,7 +274,7 @@ const styles = StyleSheet.create({
     marginRight: 15
   },
   submitButtonStyle: {
-    backgroundColor: 'red',
+    backgroundColor: Colors.Primary,
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 10,

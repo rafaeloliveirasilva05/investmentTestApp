@@ -5,6 +5,8 @@ import {
   Text
 } from 'react-native'
 
+import Colors from '../styles/color'
+
 const Button = ({ onPress, label }) => {
   return (
     <TouchableOpacity
@@ -17,7 +19,7 @@ const Button = ({ onPress, label }) => {
 
 const styles = StyleSheet.create({
   submitButtonStyle: {
-    backgroundColor: 'red',
+    backgroundColor: Colors.Primary,
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 10,

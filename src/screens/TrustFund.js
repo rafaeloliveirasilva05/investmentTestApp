@@ -14,6 +14,7 @@ import IconEntypo from 'react-native-vector-icons/Entypo'
 import Button from '../components/Button'
 import SimpleModal from '../components/SimpleModal'
 import FooterButtons from '../components/FooterButtons'
+import Colors from '../styles/color'
 
 class TrustFund extends Component {
   constructor(props) {
@@ -40,23 +41,23 @@ class TrustFund extends Component {
     const informationEachRisk = [
       {
         risk: 1,
-        color: '#7CFC00',
+        color: Colors.LightGreen,
       },
       {
         risk: 2,
-        color: '#228B22'
+        color: Colors.DarkGreen,
       },
       {
         risk: 3,
-        color: '#FFFF00'
+        color: Colors.Yellow,
       },
       {
         risk: 4,
-        color: '#FFA500'
+        color: Colors.Orange,
       },
       {
         risk: 5,
-        color: '#FFA500'
+        color: Colors.Primary,
       }
     ]
 
@@ -70,7 +71,7 @@ class TrustFund extends Component {
               style={styles.containerBoxRisk}
               key={element.risk}>
               <View style={[styles.containerArrow, { display: isRisk ? 'flex' : 'none' }]}>
-                <Icon name='angle-down' size={28} color="#999" />
+                <Icon name='angle-down' size={28} color={Colors.DarkGray} />
               </View>
               <View style={{
                 borderTopStartRadius: element.risk === 1 ? 15 : 0,
@@ -137,9 +138,9 @@ class TrustFund extends Component {
               onPress={() => Alert.alert('Desculpe', 'Documento não encontrado')}
               style={{ flexDirection: 'row', alignItems: 'center' }}>
               <View style={{ justifyContent: 'center', alignItems: 'center', marginRight: 10 }}>
-                <Icon name='download' size={22} color='red' />
+                <Icon name='download' size={22} color={Colors.Primary} />
               </View>
-              <Text style={{ color: 'red', fontSize: 14, fontWeight: 'bold' }}>Baixar</Text>
+              <Text style={{ color: Colors.Primary, fontSize: 14, fontWeight: 'bold' }}>Baixar</Text>
             </TouchableOpacity>
           </View>
         )
@@ -166,9 +167,9 @@ class TrustFund extends Component {
           {!this.state.stateModalOpen &&
             <>
               <View style={styles.containerTitleScreen}>
-                <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#696969' }}>Investimento</Text>
+                <Text style={{ fontSize: 18, fontWeight: 'bold', color: Colors.DimGray }}>Investimento</Text>
                 <View style={{ width: 30, height: 30, position: 'absolute', right: 0 }}>
-                  <IconEntypo name="share-alternative" size={28} color='red' />
+                  <IconEntypo name="share-alternative" size={28} color={Colors.Primary} />
                 </View>
               </View>
 
@@ -228,16 +229,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-end',
     borderWidth: 1,
-    borderColor: '#fff'
+    borderColor: Colors.White
   },
   labelStyle: {
     fontSize: 14,
-    color: '#A9A9A9',
+    color: Colors.DarkGray,
     fontWeight: 'bold'
   },
   investmentTextStyle: {
     fontSize: 14,
-    color: '#696969',
+    color: Colors.DimGray,
     fontWeight: 'bold'
   },
   containerInformation: {
@@ -249,39 +250,39 @@ const styles = StyleSheet.create({
   investmentTitletStyle: {
     textAlign: 'center',
     fontSize: 16,
-    color: '#A9A9A9',
+    color: Colors.DarkGray,
     marginBottom: 10
   },
   fundNameTextStyle: {
     textAlign: 'center',
     fontSize: 28,
-    color: '#696969',
+    color: Colors.DimGray,
     marginBottom: 40
   },
   whatIsTextStyle: {
     textAlign: 'center',
     fontSize: 16,
-    color: '#696969',
+    color: Colors.DimGray,
     marginBottom: 5,
     fontWeight: 'bold'
   },
   definitionTextStyle: {
     textAlign: 'center',
     fontSize: 14,
-    color: '#696969',
+    color: Colors.DimGray,
     marginBottom: 40
   },
   riskTitleTextStyle: {
     textAlign: 'center',
     fontSize: 16,
-    color: '#696969',
+    color: Colors.DimGray,
     marginBottom: 5,
     fontWeight: 'bold'
   },
   infoTitleTextStyle: {
     textAlign: 'center',
     fontSize: 16,
-    color: '#696969',
+    color: Colors.DimGray,
     marginTop: 45,
     fontWeight: 'bold'
   },
@@ -293,5 +294,4 @@ const styles = StyleSheet.create({
   }
 })
 
-// export default App(TrustFund, 'teste2')
 export default TrustFund

@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity
 } from 'react-native'
+import Colors from '../styles/color'
 
 export default function App(WrappedComponent, teste) {
   return class extends Component {
@@ -27,7 +28,7 @@ export default function App(WrappedComponent, teste) {
 
               <TouchableOpacity
                 onPress={() => this.props.navigation.navigate('UserRegistration')}
-                style={{ height: 40, backgroundColor: 'red', flex: 1, justifyContent: "center", alignItems: 'center' }}>
+                style={{ height: 40, backgroundColor: Colors.Primary, flex: 1, justifyContent: "center", alignItems: 'center' }}>
                 <Text style={{ color: '#fff', fontWeight: 'bold' }}>Contato</Text>
               </TouchableOpacity>
             </View>
