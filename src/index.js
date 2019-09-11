@@ -11,7 +11,7 @@ import TrustFund from './screens/TrustFund'
 const App = () => {
   return (
     <View style={{ flex: 1 }}>
-     
+      {/* <UserRegistration />  */}
       <TrustFund /> 
       {/* <View style={{ height: 40, backgroundColor: 'green', flexDirection: 'row' }}>
 

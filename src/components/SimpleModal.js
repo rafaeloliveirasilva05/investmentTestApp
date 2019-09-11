@@ -5,7 +5,7 @@ import {
   Text
 } from 'react-native'
 
-function SimpleModal({ description, title, closeStateModalOpen }) {
+function SimpleModal({ description, title, closeStateModalOpen ,labelButton}) {
 
   return (
     <View style={styles.container}>
@@ -19,7 +19,7 @@ function SimpleModal({ description, title, closeStateModalOpen }) {
       <View style={{ marginTop: 200 }}>
         <Text style={{ fontSize: 18, color: 'red', fontWeight: 'bold' }}
           onPress={closeStateModalOpen}>
-          Enviar nova mensagem
+          {labelButton}
           </Text>
       </View>
     </View>

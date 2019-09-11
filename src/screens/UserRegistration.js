@@ -11,6 +11,7 @@ import axios from 'axios'
 
 import FloatingLabelInput from '../components/FloatingLabelInput'
 import SimpleModal from '../components/SimpleModal'
+import Button from '../components/Button'
 
 class UserRegistration extends Component {
   constructor(props) {
@@ -211,11 +212,9 @@ class UserRegistration extends Component {
 
     if (formElementData.type === 5) {
       return (
-        <TouchableOpacity
-          style={styles.submitButtonStyle}
-          onPress={this.handleSubmit}>
-          <Text style={{ color: '#fff', fontSize: 16, }}>{formElementData.message}</Text>
-        </TouchableOpacity>
+        <Button
+          label={formElementData.message}
+          onPress={this.handleSubmit}/>
       )
     }
   }
@@ -229,6 +228,7 @@ class UserRegistration extends Component {
           <SimpleModal
             title={'Obrigado'}
             description={'Mensagem enviada com sucesso :)'}
+            labelButton={'Enviar nova mensagem'}
             closeStateModalOpen={() => this.setState({ stateModalOpen: false })} />
         }
 
