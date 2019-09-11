@@ -6,7 +6,8 @@ import {
   StyleSheet,
   TouchableOpacity
 } from 'react-native'
-
+import Icon from 'react-native-vector-icons/FontAwesome'
+import Colors from '../styles/color'
 class FloatingLabelInput extends Component {
   constructor(props) {
     super(props)
@@ -44,7 +45,7 @@ class FloatingLabelInput extends Component {
             <TouchableOpacity
               style={styles.clearInputStyle}
               onPress={this.props.clearInput}>
-              <Text style={{}}>x</Text>
+              <Icon name='close' size={18} color={Colors.DarkGray} />
             </TouchableOpacity>
           }
         </View>
@@ -64,7 +65,6 @@ const styles = StyleSheet.create({
   clearInputStyle: {
     justifyContent: 'center',
     alignItems: "center",
-    backgroundColor: 'blue',
     height: 20,
     width: 20,
     position: 'absolute',

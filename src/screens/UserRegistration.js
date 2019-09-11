@@ -191,6 +191,7 @@ class UserRegistration extends Component {
         <FloatingLabelInput
           label={formElementData.message}
           value={formElementData.dataInput}
+          autoCapitalize={'none'}
           onChangeText={(inputData) => this.insertData(inputData, position)}
           clearInput={() => this.clearInput(position)}
           borderColor={this.setColorBorder(formElementData)}
