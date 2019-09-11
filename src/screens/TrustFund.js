@@ -13,7 +13,7 @@ import IconEntypo from 'react-native-vector-icons/Entypo'
 
 import Button from '../components/Button'
 import SimpleModal from '../components/SimpleModal'
-import App from './App'
+import FooterButtons from '../components/FooterButtons'
 
 class TrustFund extends Component {
   constructor(props) {
@@ -147,51 +147,68 @@ class TrustFund extends Component {
     )
   }
 
+  onPressTrustFund = () => {
+    this.setState({ stateModalOpen: false })
+    this.props.navigation.navigate('TrustFund')
+  }
+
+  onPressUserRegistration = () => {
+    this.props.navigation.navigate('UserRegistration')
+  }
+
   render() {
     if (!this.state.investmentData) return null
     const { investmentData } = this.state
 
     return (
-      <ScrollView style={styles.container}>
-        {!this.state.stateModalOpen &&
-          <>
-            <View style={styles.containerTitleScreen}>
-              <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#696969' }}>Investimento</Text>
-              <View style={{ width: 30, height: 30, position: 'absolute', right: 0 }}>
-                <IconEntypo name="share-alternative" size={28} color='red' />
+      <>
+        <ScrollView style={styles.container}>
+          {!this.state.stateModalOpen &&
+            <>
+              <View style={styles.containerTitleScreen}>
+                <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#696969' }}>Investimento</Text>
+                <View style={{ width: 30, height: 30, position: 'absolute', right: 0 }}>
+                  <IconEntypo name="share-alternative" size={28} color='red' />
+                </View>
               </View>
-            </View>
 
-            <Text style={styles.investmentTitletStyle}>{investmentData.title}</Text>
-            <Text style={styles.fundNameTextStyle}>{investmentData.fundName}</Text>
-            <Text style={styles.whatIsTextStyle}>{investmentData.whatIs}</Text>
-            <Text style={styles.definitionTextStyle}>{investmentData.definition}</Text>
-            <Text style={styles.riskTitleTextStyle}>{investmentData.riskTitle}</Text>
+              <Text style={styles.investmentTitletStyle}>{investmentData.title}</Text>
+              <Text style={styles.fundNameTextStyle}>{investmentData.fundName}</Text>
+              <Text style={styles.whatIsTextStyle}>{investmentData.whatIs}</Text>
+              <Text style={styles.definitionTextStyle}>{investmentData.definition}</Text>
+              <Text style={styles.riskTitleTextStyle}>{investmentData.riskTitle}</Text>
 
-            {this.investmentRiskChart(investmentData.risk)}
+              {this.investmentRiskChart(investmentData.risk)}
 
-            <Text style={styles.infoTitleTextStyle}>{investmentData.infoTitle}</Text>
-            {this.investmentTable(investmentData.moreInfo)}
+              <Text style={styles.infoTitleTextStyle}>{investmentData.infoTitle}</Text>
+              {this.investmentTable(investmentData.moreInfo)}
 
-            {this.moreInformationInvestment(investmentData.info)}
-            {this.dataForDownload(investmentData.downInfo)}
+              {this.moreInformationInvestment(investmentData.info)}
+              {this.dataForDownload(investmentData.downInfo)}
 
-            <Button
-              label={'Investir'}
-              onPress={() => this.setState({ stateModalOpen: true })} />
-          </>
-        }
+              <Button
+                label={'Investir'}
+                onPress={() => this.setState({ stateModalOpen: true })} />
+            </>
+          }
 
-        {this.state.stateModalOpen &&
-          <SimpleModal
-            title={'Obrigado'}
-            description={'Investimento realizado com sucesso :)'}
-            labelButton={'Novo investimento'}
-            closeStateModalOpen={() => this.setState({ stateModalOpen: false })} />
-        }
+          {this.state.stateModalOpen &&
+            <SimpleModal
+              title={'Obrigado'}
+              description={'Investimento realizado com sucesso :)'}
+              labelButton={'Novo investimento'}
+              closeStateModalOpen={() => this.setState({ stateModalOpen: false })} />
+          }
 
-        <View style={{ marginBottom: 50 }} />
-      </ScrollView>
+          <View style={{ marginBottom: 50 }} />
+        </ScrollView>
+
+        <FooterButtons
+          onPressTrustFund={this.onPressTrustFund}
+          onPressUserRegistration={this.onPressUserRegistration}
+          screen={'TrustFund'}
+        />
+      </>
     )
   }
 }
@@ -276,4 +293,5 @@ const styles = StyleSheet.create({
   }
 })
 
-export default App(TrustFund)
+// export default App(TrustFund, 'teste2')
+export default TrustFund

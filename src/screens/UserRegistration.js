@@ -12,7 +12,7 @@ import axios from 'axios'
 import FloatingLabelInput from '../components/FloatingLabelInput'
 import SimpleModal from '../components/SimpleModal'
 import Button from '../components/Button'
-import App from './App'
+import FooterButtons from '../components/FooterButtons'
 
 class UserRegistration extends Component {
   constructor(props) {
@@ -45,17 +45,21 @@ class UserRegistration extends Component {
 
   handleSubmit = () => {
     if (this.validateFilds()) {
-
-      let cells = this.state.cells.map(element => {
-        return {
-          ...element,
-          dataInput: '',
-          error: null
-        }
-      })
-
-      this.setState({ stateModalOpen: true, cells })
+      this.clearJsonInputFields()
+      this.setState({ stateModalOpen: true })
     }
+  }
+
+  clearJsonInputFields = () => {
+    let cells = this.state.cells.map(element => {
+      return {
+        ...element,
+        dataInput: '',
+        error: null
+      }
+    })
+
+    this.setState({ cells })
   }
 
   validateFilds = () => {
@@ -215,9 +219,18 @@ class UserRegistration extends Component {
       return (
         <Button
           label={formElementData.message}
-          onPress={this.handleSubmit}/>
+          onPress={this.handleSubmit} />
       )
     }
+  }
+
+  onPressTrustFund = () => {
+    this.clearJsonInputFields()
+    this.props.navigation.navigate('TrustFund')
+  }
+
+  onPressUserRegistration = () => {
+    this.props.navigation.navigate('UserRegistration')
   }
 
   render() {
@@ -241,6 +254,10 @@ class UserRegistration extends Component {
             {this.state.cells.map((element, position) => this.defineFormElements(element, position))}
           </ScrollView>
         }
+        <FooterButtons
+          onPressTrustFund={this.onPressTrustFund}
+          onPressUserRegistration={this.onPressUserRegistration}
+          screen={'UserRegistration'} />
       </>
     )
   }
@@ -266,4 +283,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default App(UserRegistration)
+export default UserRegistration
