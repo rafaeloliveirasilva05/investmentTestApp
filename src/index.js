@@ -13,7 +13,7 @@ const App = () => {
     <View style={{ flex: 1 }}>
      
       <TrustFund /> 
-      <View style={{ height: 40, backgroundColor: 'green', flexDirection: 'row' }}>
+      {/* <View style={{ height: 40, backgroundColor: 'green', flexDirection: 'row' }}>
 
         <TouchableOpacity style={{ backgroundColor: 'blue', flex: 1, justifyContent: "center", alignItems: 'center' }}>
           <Text style={{ color: '#fff', fontWeight: 'bold' }}>Investimento</Text>
@@ -23,7 +23,7 @@ const App = () => {
           <Text style={{ color: '#fff', fontWeight: 'bold' }}>Contato</Text>
         </TouchableOpacity>
 
-      </View>
+      </View> */}
     </View>
   )
 }
